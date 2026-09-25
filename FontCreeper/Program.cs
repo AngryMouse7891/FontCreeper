@@ -117,7 +117,7 @@ button.Accepting += (sender, args) =>
     }
     else if (packFormatText.Text == "")
     {
-        MessageBox.ErrorQuery(button.App!, "❌错误", "未输入资源包版本格式！如果你不知道关于资源包版本格式的信息，请看'https://zh.minecraft.wiki/w/资源包#资源包格式版本'。", "确定");
+        MessageBox.ErrorQuery(button.App!, "❌错误", "未输入资源包版本格式！如果你不知道关于资源包版本格式的信息，请看\"https://zh.minecraft.wiki/w/资源包#资源包格式版本\"。", "确定");
     }
     else 
     {
