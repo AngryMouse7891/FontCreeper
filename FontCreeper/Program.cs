@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Reflection;
 using FontCreeper;
 using Terminal.Gui.App;
@@ -9,6 +10,14 @@ app.Init();
 
 var assembly = Assembly.GetExecutingAssembly();
 var version = assembly.GetName().Version;
+
+string asciiText = @$"███████╗ ██████╗ ███╗   ██╗████████╗ ██████╗██████╗ ███████╗███████╗██████╗ ███████╗██████╗ 
+██╔════╝██╔═══██╗████╗  ██║╚══██╔══╝██╔════╝██╔══██╗██╔════╝██╔════╝██╔══██╗██╔════╝██╔══██╗
+█████╗  ██║   ██║██╔██╗ ██║   ██║   ██║     ██████╔╝█████╗  █████╗  ██████╔╝█████╗  ██████╔╝
+██╔══╝  ██║   ██║██║╚██╗██║   ██║   ██║     ██╔══██╗██╔══╝  ██╔══╝  ██╔═══╝ ██╔══╝  ██╔══██╗
+██║     ╚██████╔╝██║ ╚████║   ██║   ╚██████╗██║  ██║███████╗███████╗██║     ███████╗██║  ██║
+╚═╝      ╚═════╝ ╚═╝  ╚═══╝   ╚═╝    ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚══════╝╚═╝  ╚═╝
+                                                                                            {version}";
 
 Packager pak = new Packager();
 
@@ -25,8 +34,34 @@ var menu = new MenuBar(
         {
             new MenuItem("_复制", "", () => { }),
             new MenuItem("_粘贴", "", () => { })
+        }),
+        new MenuBarItem("_帮助", new MenuItem[]
+        {
+            new MenuItem("_Gitee 仓库", "打开该项目的Gitee仓库", () => openGiteeRepo()),
+            new MenuItem("_关于", "关于 FontCreeper", () => MessageBox.Query(app, "关于", $"{asciiText}\nFontCreeper是一个使用了.NET+Terminal.Gui的Minecraft Java版字体包制作工具。\nBy AngryMouse7891", "确定"))
         })
     });
+
+void openGiteeRepo()
+{
+    // 指定要访问的 URL
+    string url = "https://gitee.com/AngryMouse7891/mcparser";
+
+    try
+    {
+        // 使用 Process 类的 Start 方法打开浏览器
+        Process.Start(url);
+    }
+    catch (System.ComponentModel.Win32Exception noBrowser)
+    {
+        if (noBrowser.ErrorCode == -2147467259)
+            MessageBox.ErrorQuery(app, "❌错误", "电脑上没浏览器！", "确定");
+    }
+    catch (Exception other)
+    {
+        MessageBox.ErrorQuery(app, "❌错误", $"打开网页失败！原因：{other.Message}", "确定");
+    }
+}
 
 // 创建 OpenDialog
 var ttfOpenDialog = new OpenDialog
