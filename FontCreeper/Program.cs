@@ -37,7 +37,7 @@ var ttfOpenDialog = new OpenDialog
 
 Label pkgNameLabel = new()
 {
-    Text = "生成的资源包名",
+    Text = "* 生成的资源包名",
     X=5,
     Y=5
 };
@@ -58,7 +58,7 @@ Button BrowseDialog1 = new()
 
 Label fontFileLabel = new()
 {
-    Text = "字体文件路径",
+    Text = "* 字体文件路径",
     X = 5,
     Y = 7
 };
@@ -79,7 +79,7 @@ Button BrowseDialog2 = new()
 
 Label outputDirLabel = new()
 {
-    Text = "打包输出目录",
+    Text = "* 打包输出目录",
     X = 5,
     Y = 9
 };
@@ -100,7 +100,7 @@ var outputDirOpenDialog = new OpenDialog
 
 Label packFormatLabel = new()
 {
-    Text = "资源包版本格式",
+    Text = "* 资源包版本格式",
     X = 5,
     Y = 11
 };
