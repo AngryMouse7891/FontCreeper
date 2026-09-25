@@ -1,4 +1,4 @@
-﻿using System.Reflection;
+using System.Reflection;
 using FontCreeper;
 using Terminal.Gui.App;
 using Terminal.Gui.ViewBase;
@@ -103,25 +103,47 @@ window.Add(button);
 
 button.Accepting += (sender, args) =>
 {
-    if (pkgNameText.Text == "")
+    // 清理输入，去掉粘贴时可能混入的不可见字符（如 U+202A）
+    string pkgName = Packager.NormalizePath(pkgNameText.Text);
+    string fontFile = Packager.NormalizePath(fontFileText.Text);
+    string outputDir = Packager.NormalizePath(outputDirText.Text);
+
+    if (pkgName == "")
     {
         MessageBox.ErrorQuery(button.App!, "❌错误", "未输入生成的资源包名！", "确定");
     }
-    else if (fontFileText.Text == "")
+    else if (fontFile == "")
     {
         MessageBox.ErrorQuery(button.App!, "❌错误", "未输入字体文件路径！", "确定");
     }
-    else if (outputDirText.Text == "")
+    else if (outputDir == "")
     {
         MessageBox.ErrorQuery(button.App!, "❌错误", "未输入打包输出目录！", "确定");
     }
-    else if (packFormatText.Text == "")
+    else if (!int.TryParse(packFormatText.Text.Trim(), out int pf))
     {
-        MessageBox.ErrorQuery(button.App!, "❌错误", "未输入资源包版本格式！如果你不知道关于资源包版本格式的信息，请看\"https://zh.minecraft.wiki/w/资源包#资源包格式版本\"。", "确定");
+        MessageBox.ErrorQuery(button.App!, "❌错误", "资源包版本格式必须是数字！如果你不知道关于资源包版本格式的信息，请看\"https://zh.minecraft.wiki/w/资源包#资源包格式版本\"。", "确定");
+    }
+    else if (!File.Exists(fontFile))
+    {
+        MessageBox.ErrorQuery(button.App!, "❌错误", $"找不到字体文件：\n{fontFile}", "确定");
+    }
+    else if (!Directory.Exists(outputDir))
+    {
+        MessageBox.ErrorQuery(button.App!, "❌错误", $"找不到打包输出目录：\n{outputDir}", "确定");
     }
     else 
     {
-        MessageBox.Query(button.App!, "打包完成", $"打包文件已放在D:/111.zip", "确定");
+        try
+        {
+            Packager pak = new Packager();
+            pak.package(pkgName, outputDir, fontFile, pf);
+            MessageBox.Query(button.App!, "打包完成", $"打包文件已放在{Path.Combine(outputDir, pkgName + ".zip")}", "确定");
+        }
+        catch (Exception ex)
+        {
+            MessageBox.ErrorQuery(button.App!, "❌错误", $"打包失败：\n{ex.Message}", "确定");
+        }
     }
     args.Handled = true; // 防止事件冒泡
 };

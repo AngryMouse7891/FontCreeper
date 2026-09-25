@@ -124,6 +124,8 @@ namespace FontCreeper
         {
             try
             {
+                path = Packager.NormalizePath(path);
+
                 if (File.Exists(path))
                 {
                     SelectedPath = path;
@@ -179,13 +181,20 @@ namespace FontCreeper
             }
         }
 
+        private static string GetItemName(string item)
+        {
+            // 列表项格式为 "<图标> <名称>"，图标（📁/📄）是代理对，不能按固定长度截取
+            var space = item.IndexOf(' ');
+            return space >= 0 ? item[(space + 1)..] : item;
+        }
+
         private void OnItemActivated()
         {
             var index = _fileList.SelectedItem ?? -1;
             if (index < 0 || index >= _items.Count) return;
 
             var selected = _items[index];
-            var name = selected.Substring(2);
+            var name = GetItemName(selected);
             var fullPath = Path.Combine(_currentDir, name);
 
             if (Directory.Exists(fullPath))
@@ -205,7 +214,7 @@ namespace FontCreeper
             if (index >= 0 && index < _items.Count)
             {
                 var selected = _items[index];
-                var name = selected.Substring(2);
+                var name = GetItemName(selected);
                 var fullPath = Path.Combine(_currentDir, name);
 
                 if (File.Exists(fullPath))
@@ -216,7 +225,7 @@ namespace FontCreeper
                 }
             }
 
-            var manualPath = _pathField.Text ?? string.Empty;
+            var manualPath = Packager.NormalizePath(_pathField.Text);
             if (File.Exists(manualPath))
             {
                 SelectedPath = Path.GetFullPath(manualPath);
