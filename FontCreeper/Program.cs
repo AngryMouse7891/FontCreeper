@@ -10,7 +10,30 @@ app.Init();
 var assembly = Assembly.GetExecutingAssembly();
 var version = assembly.GetName().Version;
 
+Packager pak = new Packager();
+
 using Window window = new() { Title = "FontCreeper MC字体包生成器 v"+version };
+
+var menu = new MenuBar(
+    new MenuBarItem[]
+    {
+        new MenuBarItem("_文件", new MenuItem[]
+        {
+            new MenuItem("_退出", "退出 FontCreeper", () => app.RequestStop())
+        }),
+        new MenuBarItem("_编辑", new MenuItem[]
+        {
+            new MenuItem("_复制", "", () => { }),
+            new MenuItem("_粘贴", "", () => { })
+        })
+    });
+
+// 创建 OpenDialog
+var ttfOpenDialog = new OpenDialog
+{
+    Title = "打开文件",
+    AllowedTypes = new() { new AllowedType("TrueType 字体", ".ttf"), new AllowedType("OpenType 字体", ".otf") }
+};
 
 Label pkgNameLabel = new()
 {
@@ -68,6 +91,13 @@ TextField outputDirText = new()
     Width = 20
 };
 
+// 创建 OpenDialog
+var outputDirOpenDialog = new OpenDialog
+{
+    Title = "打开文件",
+    OpenMode=OpenMode.Directory
+};
+
 Label packFormatLabel = new()
 {
     Text = "资源包版本格式",
@@ -100,6 +130,7 @@ window.Add(outputDirLabel);
 window.Add(packFormatText);
 window.Add(packFormatLabel);
 window.Add(button);
+window.Add(menu);
 
 button.Accepting += (sender, args) =>
 {
@@ -122,7 +153,7 @@ button.Accepting += (sender, args) =>
     }
     else if (!int.TryParse(packFormatText.Text.Trim(), out int pf))
     {
-        MessageBox.ErrorQuery(button.App!, "❌错误", "资源包版本格式必须是数字！如果你不知道关于资源包版本格式的信息，请看\"https://zh.minecraft.wiki/w/资源包#资源包格式版本\"。", "确定");
+        MessageBox.ErrorQuery(button.App!, "❌错误", "资源包版本格式必须是数字！\n如果你不知道关于资源包版本格式的信息，请看\"https://zh.minecraft.wiki/w/资源包#资源包格式版本\"。", "确定");
     }
     else if (!File.Exists(fontFile))
     {
@@ -136,7 +167,6 @@ button.Accepting += (sender, args) =>
     {
         try
         {
-            Packager pak = new Packager();
             pak.package(pkgName, outputDir, fontFile, pf);
             MessageBox.Query(button.App!, "打包完成", $"打包文件已放在{Path.Combine(outputDir, pkgName + ".zip")}", "确定");
         }
@@ -150,11 +180,25 @@ button.Accepting += (sender, args) =>
 
 BrowseDialog1.Accepting += (sender, args) =>
 {
-    var dialog = new FilePickerDialog();
-    app.Run(dialog);
-    if (!string.IsNullOrEmpty(dialog.SelectedPath))
+    // 模态运行
+    app.Run(ttfOpenDialog);
+    // 获取结果
+    if (ttfOpenDialog.FilePaths.Count > 0)
     {
-        fontFileText.Text = dialog.SelectedPath;
+        string selectedFile = ttfOpenDialog.FilePaths[0];
+        fontFileText.Text=selectedFile;
+    }
+};
+
+BrowseDialog2.Accepting += (sender, args) =>
+{
+    // 模态运行
+    app.Run(outputDirOpenDialog);
+    // 获取结果
+    if (outputDirOpenDialog.FilePaths.Count > 0)
+    {
+        string selectedDir = outputDirOpenDialog.FilePaths[0];
+        outputDirText.Text = selectedDir;
     }
 };
 
