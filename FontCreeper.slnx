@@ -1,4 +1,10 @@
 <Solution>
+  <Configurations>
+    <Platform Name="ARM32" />
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
   <Folder Name="/解决方案项/">
     <File Path="README.md" />
   </Folder>
