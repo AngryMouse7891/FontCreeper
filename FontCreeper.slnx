@@ -1,5 +1,8 @@
 <Solution>
   <Configurations>
+    <BuildType Name="All" />
+    <BuildType Name="Debug" />
+    <BuildType Name="Release" />
     <Platform Name="ARM32" />
     <Platform Name="ARM64" />
     <Platform Name="x64" />
@@ -16,6 +19,11 @@
     <File Path="doc/img/filedialog.png" />
     <File Path="doc/img/menu.png" />
   </Folder>
-  <Project Path="FontCreeper.Setup/FontCreeper.Setup.vdproj" Type="Installer" />
-  <Project Path="FontCreeper/FontCreeper.csproj" />
+  <Project Path="FontCreeper.Setup/FontCreeper.Setup.vdproj" Type="Installer">
+    <BuildType Solution="All|*" Project="Debug" />
+    <Build />
+  </Project>
+  <Project Path="FontCreeper/FontCreeper.csproj">
+    <BuildType Solution="All|*" Project="Debug" />
+  </Project>
 </Solution>
