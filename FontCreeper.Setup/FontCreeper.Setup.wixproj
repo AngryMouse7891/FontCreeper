@@ -1,0 +1,15 @@
+﻿<Project Sdk="WixToolset.Sdk/7.0.0">
+  <ItemGroup>
+    <PackageReference Include="WixToolset.UI.wixext" Version="7.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FontCreeper\FontCreeper.csproj" />
+  </ItemGroup>
+	<PropertyGroup>
+		<AcceptEula>wix7</AcceptEula>
+		<Version>1.0.0</Version>
+		<Cultures>zh-CN;</Cultures>
+		<OutputName>FontCreeper.win.$(Platform).v$(Version)</OutputName>
+		<OutputType>Package</OutputType>
+	</PropertyGroup>
+</Project>

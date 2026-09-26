@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+	<Fragment>
+		<ComponentGroup Id="AppFiles" Directory="INSTALLFOLDER">
+			<!-- 把.NET项目输出目录下所有文件全部打包（包含dll、exe、配置文件） -->
+			<Files Include="$(var.FontCreeper.TargetDir)**" />
+		</ComponentGroup>
+	</Fragment>
+</Wix>

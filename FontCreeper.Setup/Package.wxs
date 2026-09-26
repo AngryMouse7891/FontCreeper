@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?define ProductName = "FontCreeper" ?>
+<?define Manufacturer = "AngryMouse7891" ?>
+<?define Version = "1.0.0" ?>
+<?define UpgradeCode = "3E556D04-8CA9-408D-BFCA-0952A3D09DBA" ?>
+<!-- 固定GUID，用于版本升级 -->
+
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs"
+	 xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui">
+	<Package Name="$(var.ProductName)"
+			 Manufacturer="$(var.Manufacturer)"
+			 Version="$(var.Version)"
+			 Language="2052"
+			 UpgradeCode="$(var.UpgradeCode)"
+			 Compressed="true">
+		<MediaTemplate EmbedCab="yes" />
+		<WixVariable Id="WixUILicenseRtf" Value="LICENSE.rtf" />
+
+		<ui:WixUI Id="WixUI_FeatureTree" InstallDirectory="INSTALLFOLDER"/>
+		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
+
+		<StandardDirectory Id="ProgramFiles6432Folder">
+			<Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" />
+		</StandardDirectory>
+		<!-- 开始菜单目录结构 -->
+		<Directory Id="ProgramMenuFolder">
+			<Directory Id="ApplicationProgramsFolder" Name="$(var.ProductName)" />
+		</Directory>
+
+		<Feature Id="MainFeature" Title="FontCreeper主程序" Level="1">
+			<ComponentGroupRef Id="AppFiles" />
+		</Feature>
+		<!-- 提取exe内部图标，Id给Shortcut使用 -->
+		<Icon Id="AppIcon" SourceFile="../FontCreeper/favicon.ico" />
+
+		<Feature Id="ShourtcutFeature" Title="桌面及开始菜单快捷方式" Level="2">
+			<ComponentGroupRef Id="Shortcuts" />
+		</Feature>
+			<!-- 所有快捷方式组件全部放在这个ComponentGroup里 -->
+			<ComponentGroup Id="Shortcuts">
+				<!-- 开始菜单快捷方式 -->
+				<Component Directory="ApplicationProgramsFolder" Guid="*">
+					<Shortcut
+					  Id="StartMenuShortcut"
+					  Name="$(var.ProductName)"
+					  Target="[INSTALLFOLDER]FontCreeper.exe"
+					  WorkingDirectory="INSTALLFOLDER"
+					  Icon="AppIcon"
+					  Description="FontCreeper 应用程序"/>
+
+					<RemoveFolder Id="ApplicationProgramsFolderRemove" Directory="ApplicationProgramsFolder" On="uninstall"/>
+					<RegistryValue Root="HKCU" Key="Software\$(var.Manufacturer)\$(var.ProductName)" Name="Installed" Type="integer" Value="1" KeyPath="yes"/>
+				</Component>
+
+				<!-- 桌面快捷方式，不需要就删除整个Component -->
+				<Component Directory="DesktopFolder" Guid="*">
+					<Shortcut
+					  Id="DesktopShortcut"
+					  Name="$(var.ProductName)"
+					  Target="[INSTALLFOLDER]FontCreeper.exe"
+					  WorkingDirectory="INSTALLFOLDER"
+					  Icon="AppIcon"
+					  Description="FontCreeper 应用程序"/>
+					<RegistryValue Root="HKCU" Key="Software\$(var.Manufacturer)\$(var.ProductName)" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes"/>
+				</Component>
+			</ComponentGroup>
+	</Package>
+</Wix>

@@ -19,9 +19,9 @@
     <File Path="doc/img/filedialog.png" />
     <File Path="doc/img/menu.png" />
   </Folder>
-  <Project Path="FontCreeper.Setup/FontCreeper.Setup.vdproj" Type="Installer">
+  <Project Path="FontCreeper.Setup/FontCreeper.Setup.wixproj" Type="b7dd6f7e-def8-4e67-b5b7-07ef123db6f0" Id="7709ed73-87f9-4307-b709-771d02ef3fcb">
     <BuildType Solution="All|*" Project="Debug" />
-    <Build />
+    <Platform Solution="*|ARM32" Project="x64" />
   </Project>
   <Project Path="FontCreeper/FontCreeper.csproj">
     <BuildType Solution="All|*" Project="Debug" />
