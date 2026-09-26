@@ -10,10 +10,12 @@
   </Folder>
   <Folder Name="/解决方案项/doc/" />
   <Folder Name="/解决方案项/doc/img/">
+    <File Path="doc/img/about.png" />
     <File Path="doc/img/complete.png" />
     <File Path="doc/img/cover.png" />
     <File Path="doc/img/filedialog.png" />
     <File Path="doc/img/menu.png" />
   </Folder>
+  <Project Path="FontCreeper.Setup/FontCreeper.Setup.vdproj" Type="Installer" />
   <Project Path="FontCreeper/FontCreeper.csproj" />
 </Solution>
