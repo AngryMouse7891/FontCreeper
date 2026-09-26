@@ -35,6 +35,10 @@ FontCreeper是一个使用了.NET+Terminal.Gui的Minecraft Java版字体包制�
 
 ![菜单](doc/img/menu.png)
 
+### 关于
+
+![关于](doc/img/about.png)
+
 ### 文件选择
 
 ![文件选择](doc/img/filedialog.png)
