@@ -52,6 +52,7 @@ FontCreeper是一个使用了.NET+Terminal.Gui的Minecraft Java版字体包制�
 | 包名 | 版本 | 描述 |
 | :---------: | :-------: | :----------: |
 | [`Terminal.Gui`](https://www.nuget.org/packages/Terminal.Gui/) | `2.4.17` | 终端界面框架 |
+| [`WixToolset.UI.wixext`](https://www.nuget.org/packages/WixToolset.UI.wixext/) | `7.0.0` | 安装包界面 |
 
 ## 开源协议
 
