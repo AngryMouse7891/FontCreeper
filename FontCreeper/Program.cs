@@ -190,6 +190,10 @@ button.Accepting += (sender, args) =>
     {
         MessageBox.ErrorQuery(button.App!, "❌错误", "资源包版本格式必须是数字！\n如果你不知道关于资源包版本格式的信息，请看\"https://zh.minecraft.wiki/w/资源包#资源包格式版本\"。", "确定");
     }
+    else if (int.Parse(packFormatText.Text)<=3)
+    {
+        MessageBox.ErrorQuery(button.App!, "❌错误", "不支持Minecraft 1.12.2及以下版本的字体包打包！\n如果你不知道关于资源包版本格式的信息，请看\"https://zh.minecraft.wiki/w/资源包#资源包格式版本\"。", "确定");
+    }
     else if (!File.Exists(fontFile))
     {
         MessageBox.ErrorQuery(button.App!, "❌错误", $"找不到字体文件：\n{fontFile}", "确定");
