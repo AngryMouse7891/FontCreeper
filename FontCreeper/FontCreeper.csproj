@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
 	<PackageId>FontCreeper</PackageId>
 	<Version>1.0.1</Version>
+	<AssemblyVersion>1.0.1.0</AssemblyVersion>
 	<TargetFramework>net10.0</TargetFramework>
 	<ApplicationIcon>favicon.ico</ApplicationIcon>
 	<PublishAot>True</PublishAot>
