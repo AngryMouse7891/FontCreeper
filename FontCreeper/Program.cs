@@ -8,8 +8,18 @@ using Terminal.Gui.Views;
 using IApplication app = Application.Create();
 app.Init();
 
+const int ENTRY_DEFAULT_WIDTH = 40;
+
 var assembly = Assembly.GetExecutingAssembly();
 var version = assembly.GetName().Version;
+var gitCommit=ThisAssembly.Git.Commit;
+var gitCommits = ThisAssembly.Git.Commits;
+var gitCommitDate = ThisAssembly.Git.CommitDate;
+var gitBranch=ThisAssembly.Git.Branch;
+var gitSha1 = ThisAssembly.Git.Sha;
+var gitTag=ThisAssembly.Git.Tag;
+var attribute = assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
+        .FirstOrDefault(x => x.Key == "BuildTime");
 
 string asciiText = @$"███████╗ ██████╗ ███╗   ██╗████████╗ ██████╗██████╗ ███████╗███████╗██████╗ ███████╗██████╗ 
 ██╔════╝██╔═══██╗████╗  ██║╚══██╔══╝██╔════╝██╔══██╗██╔════╝██╔════╝██╔══██╗██╔════╝██╔══██╗
@@ -19,9 +29,20 @@ string asciiText = @$"███████╗ ██████╗ ███�
 ╚═╝      ╚═════╝ ╚═╝  ╚═══╝   ╚═╝    ╚═════╝╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚══════╝╚═╝  ╚═╝
                                                                                             {version}";
 
+string gitMsg = $@"
+Revision: {gitCommit}
+Commits: {gitCommits}
+Commit Date: {gitCommitDate}
+Branch: {gitBranch}
+SHA1: {gitSha1}
+Tag: {gitTag}
+";
+
+string gitMsgShort = $"r{gitCommit} ● branch {gitBranch} ● tag {gitTag}";
+
 Packager pak = new Packager();
 
-using Window window = new() { Title = "FontCreeper MC字体包生成器 v"+version };
+using Window window = new() { Title = "FontCreeper MC字体包生成器 v"+version ,};
 
 var menu = new MenuBar(
     new MenuBarItem[]
@@ -38,7 +59,8 @@ var menu = new MenuBar(
         new MenuBarItem("_帮助", new MenuItem[]
         {
             new MenuItem("_Gitee 仓库", "打开该项目的Gitee仓库", () => openGiteeRepo()),
-            new MenuItem("_关于", "关于 FontCreeper", () => MessageBox.Query(app, "关于", $"{asciiText}\nFontCreeper是一个使用了.NET+Terminal.Gui的Minecraft Java版字体包制作工具。\nBy AngryMouse7891", "确定"))
+            new MenuItem("_Git 提交信息", "查看完整Git提交信息", () => MessageBox.Query(app, "Git 提交信息", gitMsg, "确定")),
+            new MenuItem("_关于", "关于 FontCreeper", () => MessageBox.Query(app, "关于", $"{asciiText}\nFontCreeper是一个使用了.NET+Terminal.Gui的Minecraft Java版字体包制作工具。\nGit提交信息：{gitMsgShort}\n构建时间：{getBuildTime()}\nBy AngryMouse7891", "确定"))
         })
     });
 
@@ -63,6 +85,11 @@ void openGiteeRepo()
     }
 }
 
+string getBuildTime()
+{
+    return attribute?.Value ?? "未知";
+}
+
 // 创建 OpenDialog
 var ttfOpenDialog = new OpenDialog
 {
@@ -81,7 +108,7 @@ TextField pkgNameText = new()
 {
     X=Pos.Right(pkgNameLabel)+1,
     Y=5,
-    Width=20
+    Width=ENTRY_DEFAULT_WIDTH
 };
 
 Button BrowseDialog1 = new()
@@ -102,7 +129,7 @@ TextField fontFileText = new()
 {
     X = Pos.Right(pkgNameLabel) + 1,
     Y = 7,
-    Width = 20
+    Width = ENTRY_DEFAULT_WIDTH
 };
 
 Button BrowseDialog2 = new()
@@ -123,7 +150,8 @@ TextField outputDirText = new()
 {
     X = Pos.Right(pkgNameLabel) + 1,
     Y = 9,
-    Width = 20
+    Width = ENTRY_DEFAULT_WIDTH,
+    Text= Path.Combine(FontCreeper.Dirs.GetHomeDirectory(),"Documents")
 };
 
 // 创建 OpenDialog
@@ -144,7 +172,7 @@ TextField packFormatText = new()
 {
     X = Pos.Right(pkgNameLabel) + 1,
     Y = 11,
-    Width = 20
+    Width = ENTRY_DEFAULT_WIDTH
 };
 
 Button button = new()

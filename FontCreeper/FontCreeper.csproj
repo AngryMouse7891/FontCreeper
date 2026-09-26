@@ -10,7 +10,15 @@
 	<ApplicationIcon>favicon.ico</ApplicationIcon>
 	<PublishAot>True</PublishAot>
 	<PublishTrimmed>False</PublishTrimmed>
+	<AssemblyBuildTime>$([System.DateTime]::Now.ToString('yyyy-MM-dd HH:mm:ss'))</AssemblyBuildTime>
   </PropertyGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Reflection.AssemblyMetadataAttribute">
+			<_Parameter1>BuildTime</_Parameter1>
+			<_Parameter2>$(AssemblyBuildTime)</_Parameter2>
+		</AssemblyAttribute>
+	</ItemGroup>
 
   <ItemGroup>
     <Content Include="favicon.ico" />
@@ -23,7 +31,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="GitInfo" Version="3.6.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Terminal.Gui" Version="2.4.17" />
   </ItemGroup>
+	
 
 </Project>
