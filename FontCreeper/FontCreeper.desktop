@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=FontCreeper
+GenericName=Minecraft Font Pack Generator
+GenericName[zh_CN]=Minecraft字体包制作器
+Exec=FontCreeper
+Icon=FontCreeper
+Terminal=true
+Categories=Utility;
+Comment=A Minecraft Java edition font pack creation tool that uses .NET + Terminal.Gui
+Comment[zh_CN]=一个使用了.NET+Terminal.Gui的Minecraft Java版字体包制作工具

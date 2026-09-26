@@ -12,6 +12,12 @@
 
   <ItemGroup>
     <Content Include="favicon.ico" />
+	  <Content Include="favicon.ico" CopyToPublishDirectory="PreserveNewest">
+		  <LinuxPath>/usr/share/icons/FonrCreeper.ico</LinuxPath>
+	  </Content>
+	  <Content Include="FontCreeper.desktop" CopyToPublishDirectory="PreserveNewest">
+		  <LinuxPath>/usr/share/applications/FontCreeper.desktop</LinuxPath>
+	  </Content>
   </ItemGroup>
 
   <ItemGroup>
