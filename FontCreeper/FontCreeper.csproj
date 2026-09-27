@@ -10,7 +10,7 @@
 	<TargetFramework>net10.0</TargetFramework>
 	<ApplicationIcon>favicon.ico</ApplicationIcon>
 	<PublishAot>True</PublishAot>
-	<PublishTrimmed>False</PublishTrimmed>
+	<PublishTrimmed>True</PublishTrimmed>
 	<AssemblyBuildTime>$([System.DateTime]::Now.ToString('yyyy-MM-dd HH:mm:ss'))</AssemblyBuildTime>
   </PropertyGroup>
 
