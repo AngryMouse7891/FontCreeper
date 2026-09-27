@@ -9,6 +9,8 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/解决方案项/">
+    <File Path="Makefile" />
+    <File Path="Makefile.win" />
     <File Path="README.md" />
   </Folder>
   <Folder Name="/解决方案项/doc/" />

@@ -1,0 +1,22 @@
+PHONY: build
+
+build:
+	MSBuild.exe .\FontCreeper\FontCreeper.csproj -t:Build -p:Configuration=Release /nologo
+
+PHONY: pkg
+
+pkg:
+	MSBuild.exe .\FontCreeper.Setup\FontCreeper.Setup.wixproj -t:Build -p:Configuration=Release /nologo
+
+PHONY: clean
+
+clean:
+	MSBuild.exe .\FontCreeper.slnx -t:Clean /nologo
+
+PHONY: deps
+
+deps:
+	msbuild .\FontCreeper.slnx -t:restore /nologo
+
+all: 
+	MSBuild.exe .\FontCreeper.slnx -t:Build -p:Configuration=Release /nologo
