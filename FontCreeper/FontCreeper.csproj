@@ -11,6 +11,8 @@
 	<ApplicationIcon>favicon.ico</ApplicationIcon>
 	<SelfContained>true</SelfContained>
 	<AssemblyBuildTime>$([System.DateTime]::Now.ToString('yyyy-MM-dd HH:mm:ss'))</AssemblyBuildTime>
+	  <GitInfoAssemblyVersion>false</GitInfoAssemblyVersion>
+	  <GitInfoAssemblyFileVersion>false</GitInfoAssemblyFileVersion>
   </PropertyGroup>
 
 	<ItemGroup>
