@@ -6,7 +6,7 @@ build:
 PHONY: pkg
 
 pkg:
-	dotnet build ./FontCreeper.Setup/FontCreeper.Setup.wixproj --configuration Release
+	dotnet msbuild ./FontCreeper/FontCreeper.csproj /t:CreateDeb /p:TargetFramework=net10.0 /p:RuntimeIdentifier=linux-x64 /p:Configuration=Release
 
 PHONY: clean
 
@@ -18,5 +18,4 @@ PHONY: deps
 deps:
 	dotnet restore ./FontCreeper.slnx
 
-all: 
-	dotnet build ./FontCreeper.slnx --configuration Release
+all: build pkg
