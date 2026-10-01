@@ -93,7 +93,7 @@ string getBuildTime()
 // 创建 OpenDialog
 var ttfOpenDialog = new OpenDialog
 {
-    Title = "打开文件",
+    Title = "打开ttf/otf字体文件……",
     AllowedTypes = new() { new AllowedType("TrueType 字体", ".ttf"), new AllowedType("OpenType 字体", ".otf") }
 };
 
@@ -157,7 +157,7 @@ TextField outputDirText = new()
 // 创建 OpenDialog
 var outputDirOpenDialog = new OpenDialog
 {
-    Title = "打开文件",
+    Title = "打开输出文件夹……",
     OpenMode=OpenMode.Directory
 };
 
