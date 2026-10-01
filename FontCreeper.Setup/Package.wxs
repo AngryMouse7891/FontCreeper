@@ -33,7 +33,7 @@
 		<!-- 提取exe内部图标，Id给Shortcut使用 -->
 		<Icon Id="AppIcon" SourceFile="../FontCreeper/favicon.ico" />
 
-		<Feature Id="ShourtcutFeature" Title="桌面及开始菜单快捷方式" Level="1">
+		<Feature Id="ShourtcutFeature" Title="桌面及开始菜单快捷方式" Level="2">
 			<ComponentGroupRef Id="Shortcuts" />
 		</Feature>
 			<!-- 所有快捷方式组件全部放在这个ComponentGroup里 -->

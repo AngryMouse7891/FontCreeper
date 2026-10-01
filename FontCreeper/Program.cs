@@ -182,47 +182,16 @@ Button button = new()
     Text="开始打包"
 };
 
-Label packPngFileLabel = new()
-{
-    Text = "字体包图片路径",
-    X = 5,
-    Y = 13
-};
-
-TextField packPngFileText = new()
-{
-    X = Pos.Right(pkgNameLabel) + 1,
-    Y = 13,
-    Width = ENTRY_DEFAULT_WIDTH
-};
-
-Button BrowseDialog3 = new()
-{
-    X = Pos.Right(fontFileText) + 1,
-    Y = 13,
-    Text = "浏览……"
-};
-
-// 创建 OpenDialog
-var packPngOpenDialog = new OpenDialog
-{
-    Title = "打开png图片文件……",
-    AllowedTypes = new() { new AllowedType("png图片文件", ".png") }
-};
-
 window.Add(pkgNameLabel);
 window.Add(pkgNameText);
 window.Add(BrowseDialog1);
 window.Add(BrowseDialog2);
-window.Add(BrowseDialog3);
 window.Add(fontFileLabel);
 window.Add(fontFileText);
 window.Add(outputDirText);
 window.Add(outputDirLabel);
 window.Add(packFormatText);
 window.Add(packFormatLabel);
-window.Add(packPngFileLabel);
-window.Add(packPngFileText);
 window.Add(button);
 window.Add(menu);
 
@@ -297,18 +266,6 @@ BrowseDialog2.Accepting += (sender, args) =>
     {
         string selectedDir = outputDirOpenDialog.FilePaths[0];
         outputDirText.Text = selectedDir;
-    }
-};
-
-BrowseDialog3.Accepting += (sender, args) =>
-{
-    // 模态运行
-    app.Run(packPngOpenDialog);
-    // 获取结果
-    if (packPngOpenDialog.FilePaths.Count > 0)
-    {
-        string selectedDir = packPngOpenDialog.FilePaths[0];
-        packPngFileText.Text = selectedDir;
     }
 };
 
