@@ -69,7 +69,7 @@ namespace FontCreeper
         }
         public void package(string pkgName,string dir,string fontFile,int packFormat,string desc="这是字体包描述")
         {
-            string pkgRoot = Path.Combine(Path.GetTempPath(), pkgName);
+            string pkgRoot = Path.Combine(Path.GetTempPath(), "FontCreeper."+pkgName+".tmp");
 
             if (!Directory.Exists(pkgRoot))
             {
