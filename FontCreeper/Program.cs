@@ -12,12 +12,12 @@ const int ENTRY_DEFAULT_WIDTH = 40;
 
 var assembly = Assembly.GetExecutingAssembly();
 var version = assembly.GetName().Version;
-var gitCommit=ThisAssembly.Git.Commit;
+var gitCommit = ThisAssembly.Git.Commit;
 var gitCommits = ThisAssembly.Git.Commits;
 var gitCommitDate = ThisAssembly.Git.CommitDate;
-var gitBranch=ThisAssembly.Git.Branch;
+var gitBranch = ThisAssembly.Git.Branch;
 var gitSha1 = ThisAssembly.Git.Sha;
-var gitTag=ThisAssembly.Git.Tag;
+var gitTag = ThisAssembly.Git.Tag;
 var attribute = assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
         .FirstOrDefault(x => x.Key == "BuildTime");
 
@@ -42,7 +42,7 @@ string gitMsgShort = $"r{gitCommit} ● branch {gitBranch} ● tag {gitTag}";
 
 Packager pak = new Packager();
 
-using Window window = new() { Title = "FontCreeper MC字体包生成器 v"+version ,};
+using Window window = new() { Title = "FontCreeper MC字体包生成器 v" + version, };
 
 var menu = new MenuBar(
     new MenuBarItem[]
@@ -100,20 +100,20 @@ var ttfOpenDialog = new OpenDialog
 Label pkgNameLabel = new()
 {
     Text = "* 生成的资源包名",
-    X=5,
-    Y=5
+    X = 5,
+    Y = 5
 };
 
 TextField pkgNameText = new()
 {
-    X=Pos.Right(pkgNameLabel)+1,
-    Y=5,
-    Width=ENTRY_DEFAULT_WIDTH
+    X = Pos.Right(pkgNameLabel) + 1,
+    Y = 5,
+    Width = ENTRY_DEFAULT_WIDTH
 };
 
 Button BrowseDialog1 = new()
 {
-    X = Pos.Right(pkgNameText)+1,
+    X = Pos.Right(pkgNameText) + 1,
     Y = 7,
     Text = "浏览……"
 };
@@ -134,7 +134,7 @@ TextField fontFileText = new()
 
 Button BrowseDialog2 = new()
 {
-    X = Pos.Right(fontFileText)+1,
+    X = Pos.Right(fontFileText) + 1,
     Y = 9,
     Text = "浏览……"
 };
@@ -151,14 +151,14 @@ TextField outputDirText = new()
     X = Pos.Right(pkgNameLabel) + 1,
     Y = 9,
     Width = ENTRY_DEFAULT_WIDTH,
-    Text= Path.Combine(FontCreeper.Dirs.GetHomeDirectory(),"Documents")
+    Text = Path.Combine(FontCreeper.Dirs.GetHomeDirectory(), "Documents")
 };
 
 // 创建 OpenDialog
 var outputDirOpenDialog = new OpenDialog
 {
     Title = "打开输出文件夹……",
-    OpenMode=OpenMode.Directory
+    OpenMode = OpenMode.Directory
 };
 
 Label packFormatLabel = new()
@@ -179,19 +179,50 @@ Button button = new()
 {
     X = Pos.Right(packFormatLabel),
     Y = 20,
-    Text="开始打包"
+    Text = "开始打包"
+};
+
+Label packPngFileLabel = new()
+{
+    Text = "字体包图片路径",
+    X = 5,
+    Y = 13
+};
+
+TextField packPngFileText = new()
+{
+    X = Pos.Right(pkgNameLabel) + 1,
+    Y = 13,
+    Width = ENTRY_DEFAULT_WIDTH
+};
+
+Button BrowseDialog3 = new()
+{
+    X = Pos.Right(fontFileText) + 1,
+    Y = 13,
+    Text = "浏览……"
+};
+
+// 创建 OpenDialog
+var packPngOpenDialog = new OpenDialog
+{
+    Title = "打开png图片文件……",
+    AllowedTypes = new() { new AllowedType("png图片文件", ".png") }
 };
 
 window.Add(pkgNameLabel);
 window.Add(pkgNameText);
 window.Add(BrowseDialog1);
 window.Add(BrowseDialog2);
+window.Add(BrowseDialog3);
 window.Add(fontFileLabel);
 window.Add(fontFileText);
 window.Add(outputDirText);
 window.Add(outputDirLabel);
 window.Add(packFormatText);
 window.Add(packFormatLabel);
+window.Add(packPngFileLabel);
+window.Add(packPngFileText);
 window.Add(button);
 window.Add(menu);
 
@@ -218,7 +249,7 @@ button.Accepting += (sender, args) =>
     {
         MessageBox.ErrorQuery(button.App!, "❌错误", "资源包版本格式必须是数字！\n如果你不知道关于资源包版本格式的信息，请看\"https://zh.minecraft.wiki/w/资源包#资源包格式版本\"。", "确定");
     }
-    else if (int.Parse(packFormatText.Text)<=3)
+    else if (int.Parse(packFormatText.Text) <= 3)
     {
         MessageBox.ErrorQuery(button.App!, "❌错误", "不支持Minecraft 1.12.2及以下版本的字体包打包！\n如果你不知道关于资源包版本格式的信息，请看\"https://zh.minecraft.wiki/w/资源包#资源包格式版本\"。", "确定");
     }
@@ -230,7 +261,7 @@ button.Accepting += (sender, args) =>
     {
         MessageBox.ErrorQuery(button.App!, "❌错误", $"找不到打包输出目录：\n{outputDir}", "确定");
     }
-    else 
+    else
     {
         try
         {
@@ -253,7 +284,7 @@ BrowseDialog1.Accepting += (sender, args) =>
     if (ttfOpenDialog.FilePaths.Count > 0)
     {
         string selectedFile = ttfOpenDialog.FilePaths[0];
-        fontFileText.Text=selectedFile;
+        fontFileText.Text = selectedFile;
     }
 };
 
@@ -266,6 +297,18 @@ BrowseDialog2.Accepting += (sender, args) =>
     {
         string selectedDir = outputDirOpenDialog.FilePaths[0];
         outputDirText.Text = selectedDir;
+    }
+};
+
+BrowseDialog3.Accepting += (sender, args) =>
+{
+    // 模态运行
+    app.Run(packPngOpenDialog);
+    // 获取结果
+    if (packPngOpenDialog.FilePaths.Count > 0)
+    {
+        string selectedFile = packPngOpenDialog.FilePaths[0];
+        packPngFileText.Text = selectedFile;
     }
 };
 
