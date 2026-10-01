@@ -67,7 +67,7 @@ namespace FontCreeper
             }
             """;
         }
-        public void package(string pkgName,string dir,string fontFile,int packFormat,string desc="这是字体包描述")
+        public void package(string pkgName,string dir,string fontFile,int packFormat,string packpng="assets/default.pack.png",string desc="这是字体包描述")
         {
             string pkgRoot = Path.Combine(Path.GetTempPath(), "FontCreeper."+pkgName+".tmp");
 
@@ -88,6 +88,7 @@ namespace FontCreeper
             Directory.CreateDirectory(Path.Combine(pkgRoot, "assets", "minecraft", "font"));
 
             System.IO.File.Copy(fontFile, Path.Combine(pkgRoot, "assets", "minecraft", "font", "custom.ttf"), true);
+            System.IO.File.Copy(packpng, Path.Combine(pkgRoot, "pack.png"), true);
 
             // 创建文件并写入一些文本
             using (FileStream fs = File.Create(Path.Combine(pkgRoot, "assets", "minecraft", "font", "default.json")))

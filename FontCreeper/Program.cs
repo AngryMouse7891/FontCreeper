@@ -232,6 +232,11 @@ button.Accepting += (sender, args) =>
     string pkgName = Packager.NormalizePath(pkgNameText.Text);
     string fontFile = Packager.NormalizePath(fontFileText.Text);
     string outputDir = Packager.NormalizePath(outputDirText.Text);
+    string packicon = packPngFileText.Text;
+    if (!File.Exists(packicon))
+    {
+        packicon = "assets/default.pack.png";
+    }
 
     if (pkgName == "")
     {
@@ -265,7 +270,7 @@ button.Accepting += (sender, args) =>
     {
         try
         {
-            pak.package(pkgName, outputDir, fontFile, pf);
+            pak.package(pkgName, outputDir, fontFile, pf, packicon);
             MessageBox.Query(button.App!, "打包完成", $"打包文件已放在{Path.Combine(outputDir, pkgName + ".zip")}", "确定");
         }
         catch (Exception ex)
