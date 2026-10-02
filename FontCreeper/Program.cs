@@ -292,7 +292,7 @@ button.Accepting += (sender, args) =>
     {
         try
         {
-            pak.package(pkgName, outputDir, fontFile, pf, packicon);
+            pak.package(pkgName, outputDir, fontFile, pf, packicon, desc);
             MessageBox.Query(button.App!, "打包完成", $"打包文件已放在{Path.Combine(outputDir, pkgName + ".zip")}", "确定");
         }
         catch (Exception ex)
