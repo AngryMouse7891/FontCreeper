@@ -93,7 +93,7 @@ string getBuildTime()
 // 创建 OpenDialog
 var ttfOpenDialog = new OpenDialog
 {
-    Title = "打开ttf/otf字体文件……",
+    Title = "📄打开ttf/otf字体文件……",
     AllowedTypes = new() { new AllowedType("TrueType 字体", ".ttf"), new AllowedType("OpenType 字体", ".otf") }
 };
 
@@ -157,7 +157,7 @@ TextField outputDirText = new()
 // 创建 OpenDialog
 var outputDirOpenDialog = new OpenDialog
 {
-    Title = "打开输出文件夹……",
+    Title = "📂打开输出文件夹……",
     OpenMode = OpenMode.Directory
 };
 
@@ -179,7 +179,7 @@ Button button = new()
 {
     X = Pos.Right(packFormatLabel),
     Y = 20,
-    Text = "开始打包"
+    Text = "▶️开始打包"
 };
 
 Label packPngFileLabel = new()
@@ -206,20 +206,20 @@ Button BrowseDialog3 = new()
 // 创建 OpenDialog
 var packPngOpenDialog = new OpenDialog
 {
-    Title = "打开png图片文件……",
+    Title = "🖼️打开png图片文件……",
     AllowedTypes = new() { new AllowedType("png图片文件", ".png") }
 };
 
 Label descLabel = new()
 {
-    Text = "字体包描述",
+    Text = "字体包的描述",
     X = 7,
     Y = 15
 };
 
 CheckBox zipCheckBox = new()
 {
-    Text="导出为zip压缩包",
+    Text="📦导出为zip压缩包",
     X=7,
     Y=17
 };
@@ -303,11 +303,11 @@ button.Accepting += (sender, args) =>
             pak.package(pkgName, outputDir, fontFile, pf, packicon, desc,zipCheckBox.Value==CheckState.Checked);
             if (zipCheckBox.Value == CheckState.Checked)
             {
-                MessageBox.Query(button.App!, "打包完成", $"打包文件已放在{Path.Combine(outputDir, pkgName + ".zip")}", "确定");
+                MessageBox.Query(button.App!, "✅打包完成", $"打包文件已放在{Path.Combine(outputDir, pkgName + ".zip")}", "确定");
             }
             else
             {
-                MessageBox.Query(button.App!, "打包完成", $"打包文件已放在{Path.Combine(outputDir, pkgName)}", "确定");
+                MessageBox.Query(button.App!, "✅打包完成", $"打包文件已放在{Path.Combine(outputDir, pkgName)}", "确定");
             }
         }
         catch (Exception ex)
