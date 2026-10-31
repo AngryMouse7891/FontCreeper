@@ -6,9 +6,9 @@ PHONY: build
 build:
 	dotnet build ./FontCreeper/FontCreeper.csproj -c $(CONFIG) -a $(ARCH)
 
-PHONY: pkg
+PHONY: dpkg
 
-pkg:
+dpkg:
 	dotnet deb install
 	dotnet restore -r linux-$(ARCH)
 	dotnet msbuild ./FontCreeper/FontCreeper.csproj /t:CreateDeb /p:TargetFramework=net10.0 /p:RuntimeIdentifier=linux-$(ARCH) /p:Configuration=Release
@@ -23,4 +23,4 @@ PHONY: deps
 deps:
 	dotnet restore ./FontCreeper.slnx
 
-all: build pkg
+all: build dpkg
