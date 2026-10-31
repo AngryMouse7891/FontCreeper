@@ -97,7 +97,7 @@ namespace FontCreeper
             // 创建文件并写入一些文本
             using (FileStream fs = File.Create(Path.Combine(pkgRoot, "pack.mcmeta")))
             {
-                byte[] info = new UTF8Encoding(true).GetBytes(generatePackMcmeta(packFormat));
+                byte[] info = new UTF8Encoding(true).GetBytes(generatePackMcmeta(packFormat,desc));
                 fs.Write(info, 0, info.Length);
             }
 
