@@ -5,11 +5,11 @@
   <ItemGroup>
     <ProjectReference Include="..\FontCreeper\FontCreeper.csproj" />
   </ItemGroup>
-	<PropertyGroup>
-		<AcceptEula>wix7</AcceptEula>
-		<Version>1.0.1</Version>
-		<Cultures>zh-CN;</Cultures>
-		<OutputName>FontCreeper.win.$(Platform).v$(Version)</OutputName>
-		<OutputType>Package</OutputType>
-	</PropertyGroup>
+  <PropertyGroup>
+    <AcceptEula>wix7</AcceptEula>
+    <Version>1.0.1</Version>
+    <Cultures>zh-CN;</Cultures>
+    <OutputName>FontCreeper.$(Version).windows-$(Platform)</OutputName>
+    <OutputType>Package</OutputType>
+  </PropertyGroup>
 </Project>
