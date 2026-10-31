@@ -185,7 +185,7 @@ Button button = new()
 Label packPngFileLabel = new()
 {
     Text = "字体包图片路径",
-    X = 5,
+    X = 7,
     Y = 13
 };
 
@@ -213,14 +213,14 @@ var packPngOpenDialog = new OpenDialog
 Label descLabel = new()
 {
     Text = "字体包描述",
-    X = 5,
+    X = 7,
     Y = 15
 };
 
 CheckBox zipCheckBox = new()
 {
     Text="导出为zip压缩包",
-    X=5,
+    X=7,
     Y=17
 };
 
