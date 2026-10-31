@@ -1,12 +1,15 @@
+ARCH=x64
+CONFIG=Release
+
 PHONY: build
 
 build:
-	MSBuild.exe .\FontCreeper\FontCreeper.csproj -t:Build -p:Configuration=Release /nologo
+	MSBuild.exe .\FontCreeper\FontCreeper.csproj -t:Build -p:Configuration=$(CONFIG);Platform=$(ARCH) /nologo
 
 PHONY: pkg
 
 pkg:
-	MSBuild.exe .\FontCreeper.Setup\FontCreeper.Setup.wixproj -t:Build -p:Configuration=Release /nologo
+	MSBuild.exe .\FontCreeper.Setup\FontCreeper.Setup.wixproj -t:Build -p:Configuration=$(CONFIG);Platform=$(ARCH) /nologo
 
 PHONY: clean
 
@@ -19,4 +22,4 @@ deps:
 	msbuild .\FontCreeper.slnx -t:restore /nologo
 
 all: 
-	MSBuild.exe .\FontCreeper.slnx -t:Build -p:Configuration=Release /nologo
+	MSBuild.exe .\FontCreeper.slnx -t:Build -p:Configuration=$(CONFIG);Platform=$(ARCH) /nologo
