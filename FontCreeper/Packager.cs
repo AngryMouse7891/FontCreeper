@@ -60,7 +60,7 @@ namespace FontCreeper
                     "pack_format": {{packFormat}},
                     "supported_formats": {
                         "min_inclusive": 4,
-                        "max_inclusive": 34
+                        "max_inclusive": 101.0
                     },
                     "description": "{{desc}}"
                 }
