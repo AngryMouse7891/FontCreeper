@@ -19,7 +19,7 @@
 		<ui:WixUI Id="WixUI_FeatureTree" InstallDirectory="INSTALLFOLDER"/>
 		<MajorUpgrade DowngradeErrorMessage="!(loc.DowngradeError)" />
 
-		<StandardDirectory Id="ProgramFilesFolder">
+		<StandardDirectory Id="ProgramFiles6432Folder">
 			<Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" />
 		</StandardDirectory>
 		<!-- 开始菜单目录结构 -->
