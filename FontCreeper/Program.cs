@@ -217,6 +217,13 @@ Label descLabel = new()
     Y = 15
 };
 
+CheckBox zipCheckBox = new()
+{
+    Text="导出为zip压缩包",
+    X=5,
+    Y=17
+};
+
 TextField descText = new()
 {
     X = Pos.Right(pkgNameLabel) + 1,
@@ -241,6 +248,7 @@ window.Add(descLabel);
 window.Add(descText);
 window.Add(button);
 window.Add(menu);
+window.Add(zipCheckBox);
 
 button.Accepting += (sender, args) =>
 {
@@ -292,8 +300,15 @@ button.Accepting += (sender, args) =>
     {
         try
         {
-            pak.package(pkgName, outputDir, fontFile, pf, packicon, desc);
-            MessageBox.Query(button.App!, "打包完成", $"打包文件已放在{Path.Combine(outputDir, pkgName + ".zip")}", "确定");
+            pak.package(pkgName, outputDir, fontFile, pf, packicon, desc,zipCheckBox.Value==CheckState.Checked);
+            if (zipCheckBox.Value == CheckState.Checked)
+            {
+                MessageBox.Query(button.App!, "打包完成", $"打包文件已放在{Path.Combine(outputDir, pkgName + ".zip")}", "确定");
+            }
+            else
+            {
+                MessageBox.Query(button.App!, "打包完成", $"打包文件已放在{Path.Combine(outputDir, pkgName)}", "确定");
+            }
         }
         catch (Exception ex)
         {

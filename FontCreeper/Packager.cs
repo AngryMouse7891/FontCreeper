@@ -32,7 +32,25 @@ namespace FontCreeper
             }
             return sb.ToString().Trim();
         }
+        public static void TreeCopy(string sourceDir, string targetDir)
+        {
+            // 创建目标根目录
+            Directory.CreateDirectory(targetDir);
 
+            // 复制当前层级的所有文件
+            foreach (var file in Directory.GetFiles(sourceDir))
+            {
+                var targetFile = Path.Combine(targetDir, Path.GetFileName(file));
+                File.Copy(file, targetFile, overwrite: true);
+            }
+
+            // 递归复制所有子目录
+            foreach (var subDir in Directory.GetDirectories(sourceDir))
+            {
+                var targetSubDir = Path.Combine(targetDir, Path.GetFileName(subDir));
+                TreeCopy(subDir, targetSubDir);
+            }
+        }
         string generateDefaultJson(int size=11, int oversample=4,int shift1=0,int shift2=0)
         {
             return $$"""
@@ -67,7 +85,7 @@ namespace FontCreeper
             }
             """;
         }
-        public void package(string pkgName,string dir,string fontFile,int packFormat,string packpng="assets/default.pack.png",string desc="这是字体包描述")
+        public void package(string pkgName,string dir,string fontFile,int packFormat,string packpng="assets/default.pack.png",string desc="这是字体包描述",bool asZip=false)
         {
             string pkgRoot = Path.Combine(Path.GetTempPath(), "FontCreeper."+pkgName+".tmp");
 
@@ -97,13 +115,21 @@ namespace FontCreeper
                 fs.Write(info, 0, info.Length);
             }
 
+            if (asZip)
+            {
+                string sourceDir = pkgRoot;
+                string zipPath = Path.Combine(dir, pkgName + ".zip");
 
-            string sourceDir = pkgRoot;
-            string zipPath = Path.Combine(dir, pkgName + ".zip");
+                ZipFile.CreateFromDirectory(sourceDir, zipPath, CompressionLevel.Optimal, false);
 
-            ZipFile.CreateFromDirectory(sourceDir, zipPath, CompressionLevel.Optimal, false);
-
-            Directory.Delete(pkgRoot, true);
+                Directory.Delete(pkgRoot, true);
+            }
+            else
+            {
+                string sourceDir = pkgRoot;
+                string dirPath = Path.Combine(dir, pkgName);
+                TreeCopy(sourceDir,dirPath);
+            }
         }
     }
 }
