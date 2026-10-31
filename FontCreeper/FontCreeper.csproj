@@ -37,6 +37,9 @@
 	  <Content Include="FontCreeper.desktop" CopyToPublishDirectory="PreserveNewest">
 		  <LinuxPath>/usr/share/applications/FontCreeper.desktop</LinuxPath>
 	  </Content>
+	  <Content Include="../LICENSE.txt" CopyToPublishDirectory="PreserveNewest">
+		  <LinuxPath>/usr/share/licenses/fontcreeper/LICENSE.txt</LinuxPath>
+	  </Content>
   </ItemGroup>
 
   <ItemGroup>
