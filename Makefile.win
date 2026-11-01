@@ -21,5 +21,12 @@ PHONY: deps
 deps:
 	msbuild .\FontCreeper.slnx -t:restore /nologo
 
+PHONY: zip
+
+dpkg:
+	dotnet zip install
+	dotnet restore -r linux-$(ARCH)
+	dotnet msbuild ./FontCreeper/FontCreeper.csproj /t:CreateZip /p:TargetFramework=net10.0 /p:RuntimeIdentifier=linux-$(ARCH) /p:Configuration=Release
+
 all: 
 	MSBuild.exe .\FontCreeper.slnx -t:Build -p:Configuration=$(CONFIG);Platform=$(ARCH) /nologo
