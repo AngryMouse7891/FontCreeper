@@ -54,6 +54,8 @@ FontCreeper是一个使用了.NET+Terminal.Gui的Minecraft Java版字体包制�
 | [`Terminal.Gui`](https://www.nuget.org/packages/Terminal.Gui/) | `2.4.17` | 终端界面框架 |
 | [`WixToolset.UI.wixext`](https://www.nuget.org/packages/WixToolset.UI.wixext/) | `7.0.0` | 安装包界面 |
 | [`GitInfo`](https://www.nuget.org/packages/GitInfo/) | `3.6.1` | Git信息库 |
+| [`Semver`](https://www.nuget.org/packages/Semver/) | `3.0.0` | 语义化版本（这个库遵循 <https://semver.org/> 的语义版本规范 v2.0.0。）|
+| [`Newtonsoft.Json`](https://www.nuget.org/packages/Newtonsoft.Json/) | `13.0.4` | JSON库 |
 
 ## 开源协议
 
