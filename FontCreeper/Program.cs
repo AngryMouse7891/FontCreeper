@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.Reflection;
 using FontCreeper;
 using Terminal.Gui.App;
+using Terminal.Gui.Resources;
 using Terminal.Gui.ViewBase;
 using Terminal.Gui.Views;
 
@@ -11,7 +12,7 @@ app.Init();
 const int ENTRY_DEFAULT_WIDTH = 40;
 
 var assembly = Assembly.GetExecutingAssembly();
-var version = assembly.GetName().Version;
+var version = assembly.GetName().Version.ToString();
 var gitCommit = ThisAssembly.Git.Commit;
 var gitCommits = ThisAssembly.Git.Commits;
 var gitCommitDate = ThisAssembly.Git.CommitDate;
@@ -20,6 +21,13 @@ var gitSha1 = ThisAssembly.Git.Sha;
 var gitTag = ThisAssembly.Git.Tag;
 var attribute = assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
         .FirstOrDefault(x => x.Key == "BuildTime");
+
+// 预处理：只保留前三段
+var parts = version.Split('.');
+if (parts.Length > 3)
+{
+    version = string.Join(".", parts.Take(3));
+}
 
 string asciiText = @$"███████╗ ██████╗ ███╗   ██╗████████╗ ██████╗██████╗ ███████╗███████╗██████╗ ███████╗██████╗ 
 ██╔════╝██╔═══██╗████╗  ██║╚══██╔══╝██╔════╝██╔══██╗██╔════╝██╔════╝██╔══██╗██╔════╝██╔══██╗
@@ -60,29 +68,47 @@ var menu = new MenuBar(
         {
             new MenuItem("_Gitee 仓库", "打开该项目的Gitee仓库", () => openGiteeRepo()),
             new MenuItem("_Git 提交信息", "查看完整Git提交信息", () => MessageBox.Query(app, "Git 提交信息", gitMsg, "确定")),
+            new MenuItem("_检查更新", "检查FontCreeper的最新版本", () => updCheck()),
             new MenuItem("_关于", "关于 FontCreeper", () => MessageBox.Query(app, "关于", $"{asciiText}\nFontCreeper是一个使用了.NET+Terminal.Gui的Minecraft Java版字体包制作工具。\nGit提交信息：{gitMsgShort}\n构建时间：{getBuildTime()}\nBy AngryMouse7891", "确定"))
         })
     });
 
+void updCheck()
+{
+    Updater updater = new() { };
+    string latest = updater.isLatest(version.ToString());
+    if (latest==version.ToString())
+    {
+        MessageBox.Query(app, "✅已是最新版本", $"已是最新版本：{version}（当前）","确定");
+    }
+    else
+    {
+        int? result = MessageBox.Query(app,"⚠发现新版本", $"发现新版本：{version}（当前） -> {latest}（最新）\n是否打开下载页面？", Strings.btnNo, Strings.btnYes);
+        if (result == 1)
+        {
+            // .NET 6 及以上版本，可直接使用静态方法
+            if (OperatingSystem.IsWindows())
+                Process.Start(new ProcessStartInfo($"https://gitee.com/AngryMouse7891/FontCreeper/releases/tag/{latest}") { UseShellExecute = true });
+            else if (OperatingSystem.IsLinux())
+                Process.Start("xdg-open", $"https://gitee.com/AngryMouse7891/FontCreeper/releases/tag/{latest}");
+            else if (OperatingSystem.IsMacOS())
+                Process.Start("open", $"https://gitee.com/AngryMouse7891/FontCreeper/releases/tag/{latest}");
+        }
+    }
+}
+
 void openGiteeRepo()
 {
     // 指定要访问的 URL
-    string url = "https://gitee.com/AngryMouse7891/mcparser";
+    string url = "https://gitee.com/AngryMouse7891/FontCreeper.git";
 
-    try
-    {
-        // 使用 Process 类的 Start 方法打开浏览器
-        Process.Start(url);
-    }
-    catch (System.ComponentModel.Win32Exception noBrowser)
-    {
-        if (noBrowser.ErrorCode == -2147467259)
-            MessageBox.ErrorQuery(app, "❌错误", "电脑上没浏览器！", "确定");
-    }
-    catch (Exception other)
-    {
-        MessageBox.ErrorQuery(app, "❌错误", $"打开网页失败！原因：{other.Message}", "确定");
-    }
+    // .NET 6 及以上版本，可直接使用静态方法
+    if (OperatingSystem.IsWindows())
+        Process.Start(new ProcessStartInfo(url) { UseShellExecute = true });
+    else if (OperatingSystem.IsLinux())
+        Process.Start("xdg-open", url);
+    else if (OperatingSystem.IsMacOS())
+        Process.Start("open", url);
 }
 
 string getBuildTime()

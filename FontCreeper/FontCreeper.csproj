@@ -47,6 +47,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="Semver" Version="3.0.0" />
     <PackageReference Include="Terminal.Gui" Version="2.4.17" />
   </ItemGroup>
 	
