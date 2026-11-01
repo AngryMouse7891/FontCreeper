@@ -8,8 +8,8 @@
 	  <GitVersion>false</GitVersion>
 	  <GitInfoAssemblyVersion>false</GitInfoAssemblyVersion>
 	  <GitInfoAssemblyFileVersion>false</GitInfoAssemblyFileVersion>
-	<Version>1.0.1</Version>
-	<AssemblyVersion>1.0.1.0</AssemblyVersion>
+	<Version>1.1.0</Version>
+	<AssemblyVersion>1.1.0.0</AssemblyVersion>
 	<TargetFramework>net10.0</TargetFramework>
 	<ApplicationIcon>favicon.ico</ApplicationIcon>
 	<AssemblyBuildTime>$([System.DateTime]::Now.ToString('yyyy-MM-dd HH:mm:ss'))</AssemblyBuildTime>
