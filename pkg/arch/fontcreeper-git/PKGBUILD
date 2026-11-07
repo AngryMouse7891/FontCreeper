@@ -1,7 +1,7 @@
 # Maintainer: AngryMouse7891 <pystart@11.com>
 
 pkgname=fontcreeper-git
-pkgver=1.1.0.r2.ge142ecf
+pkgver=1.1.0.r4.gf1f1525
 pkgrel=1
 pkgdesc="FontCreeper is a tool for making Minecraft Java edition font packs using .NET+Terminal.Gui."
 arch=('x86_64' 'aarch64')
@@ -38,6 +38,9 @@ package() {
     install -d $pkgdir/opt/fontcreeper/
 
     cp -r $srcdir/publish/* $pkgdir/opt/fontcreeper/
+
+    #安装linux命令入口点文件
+    install -Dm755 "$srcdir/FontCreeper/data/fontcreeper.sh" "$pkgdir/usr/bin/fontcreeper"
 
     # 安装桌面文件和图标（可选）
     install -Dm644 "$srcdir/FontCreeper/FontCreeper/FontCreeper.desktop" "$pkgdir/usr/share/applications/FontCreeper.desktop"
