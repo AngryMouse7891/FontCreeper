@@ -1,0 +1,48 @@
+# Maintainer: AngryMouse7891 <pystart@11.com>
+
+pkgname=fontcreeper-git
+pkgver=1.1.0.r2.ge142ecf
+pkgrel=1
+pkgdesc="FontCreeper is a tool for making Minecraft Java edition font packs using .NET+Terminal.Gui."
+arch=('x86_64' 'aarch64')
+url="https://gitee.com/AngryMouse7891/FontCreeper"
+license=('LGPL-3.0')
+depends=('dotnet-runtime')
+makedepends=('git' 'dotnet-sdk')
+source=("git+${url}.git")
+sha256sums=('SKIP')
+
+pkgver() {
+    cd "$srcdir/FontCreeper"
+    # 优先取最近的 git tag，否则用提交数+短哈希
+    git describe --tags --long 2>/dev/null | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g' \
+        || printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+    cd "$srcdir/FontCreeper"
+    export DOTNET_CLI_TELEMETRY_OPTOUT=1
+    export DOTNET_NOLOGO=1
+
+    dotnet publish \
+        -c Release \
+        -r linux-x64 \
+        --self-contained false \
+        -o "$srcdir/publish" \
+        /p:PublishSingleFile=false
+}
+
+package() {
+    cd "$srcdir/FontCreeper"
+
+    install -d $pkgdir/opt/fontcreeper/
+
+    cp -r $srcdir/publish/* $pkgdir/opt/fontcreeper/
+
+    # 安装桌面文件和图标（可选）
+    install -Dm644 "$srcdir/FontCreeper/FontCreeper/FontCreeper.desktop" "$pkgdir/usr/share/applications/FontCreeper.desktop"
+    install -Dm644 "$srcdir/FontCreeper/FontCreeper/FontCreeper.png" "$pkgdir/usr/share/icons/yourproject.png"
+
+    # 安装许可证
+    install -Dm644 $srcdir/FontCreeper/LICENSE.txt "$pkgdir/usr/share/licenses/$pkgname/LICENSE.txt"
+}

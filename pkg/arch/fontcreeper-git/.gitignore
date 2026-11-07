@@ -1,0 +1,7 @@
+#archlinux generated
+
+*.pkg.tar.zst
+src
+pkg
+FontCreeper
+
