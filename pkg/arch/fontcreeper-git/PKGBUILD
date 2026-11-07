@@ -1,7 +1,7 @@
-# Maintainer: AngryMouse7891 <pystart@11.com>
+# Maintainer: AngryMouse7891 <pystart@qq.com>
 
 pkgname=fontcreeper-git
-pkgver=1.1.0.r4.gf1f1525
+pkgver=1.1.0.r6.g84c28b9
 pkgrel=1
 pkgdesc="FontCreeper is a tool for making Minecraft Java edition font packs using .NET+Terminal.Gui."
 arch=('x86_64' 'aarch64')
